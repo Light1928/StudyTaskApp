@@ -21,6 +21,7 @@
       <option name="name" value="Google" />
       <option name="url" value="https://dl.google.com/dl/android/maven2/" />
     </remote-repository>
+<<<<<<< HEAD
     <remote-repository>
       <option name="id" value="$USER_HOME$/Library/Android/sdk/extras/m2repository" />
       <option name="name" value="$USER_HOME$/Library/Android/sdk/extras/m2repository" />
@@ -36,5 +37,7 @@
       <option name="name" value="$USER_HOME$/Library/Android/sdk/extras/android/m2repository" />
       <option name="url" value="file:$USER_HOME$/Library/Android/sdk/extras/android/m2repository" />
     </remote-repository>
+=======
+>>>>>>> fcbab55e6d63f790af85b0b0b0baed1164085760
   </component>
 </project>
