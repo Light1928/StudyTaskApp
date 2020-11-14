@@ -8,6 +8,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -18,17 +20,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.activity_main)
 
-        TestButton.setOnClickListener{onTestButtonTapped(it)}
+        TestButton.setOnClickListener { onTestButtonTapped(it) }
     }
 
-    fun onTestButtonTapped(view: View?){
-        val intent = Intent(this,EntryActivity::class.java)
+    fun onTestButtonTapped(view: View?) {
+        val intent = Intent(this, EntryActivity::class.java)
         startActivity(intent)
     }
-
-
 
 
 }

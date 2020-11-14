@@ -7,24 +7,84 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.format.DateFormat
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_entry.*
+import java.lang.IllegalArgumentException
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 
-class EntryActivity : AppCompatActivity() {
+class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
+    ,DatePickerFragment.OnDateSelectedListener
+    ,TimePickerFragment.OnTimeSelectedListener{
+
+    override fun onSelected(year: Int, month: Int, date: Int){
+        val c = Calendar.getInstance()
+        c.set(year,month,date)
+        DateText.text = DateFormat.format("yyyy/MM/dd",c)
+    }
+
+    override fun onSelected(hourOfDay: Int, minute: Int){
+        TimerText.text = "%1$02d:%2$02d".format(hourOfDay, minute)
+    }
+
+    override fun getUp(){
+        finish()
+    }
+
+    override fun snooze() {
+       val calendar = Calendar.getInstance()
+        calendar.timeInMillis = System.currentTimeMillis()
+        calendar.add(Calendar.MINUTE,5)
+        setAlarmManager(calendar)
+        finish()
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(intent?.getBooleanExtra("onReceive",false) == true) {
+            val dialog = TimeAlertDialog()
+            dialog.show(supportFragmentManager,"alert_dialog")
+        }
+
         setContentView(R.layout.activity_entry)
 
 
         EntryButton.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            calendar.timeInMillis = System.currentTimeMillis()
-            calendar.add(Calendar.SECOND, 5)
-            setAlarmManager(calendar)
-
+            val date = "${DateText.text} ${TimerText.text}".toDate()
+            when {
+                date != null -> {
+                    val calendar = Calendar.getInstance()
+                    calendar.time = date
+                    setAlarmManager(calendar)
+                    Toast.makeText(
+                        this,"アラームをセットしました",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> {
+                    Toast.makeText(
+                        this,"日付の形式が正しくありません",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+        CancelButton.setOnClickListener {
+            cancelAlarmManager()
         }
 
-
+        DateText.setOnClickListener{
+            val dialog = DatePickerFragment()
+            dialog.show(supportFragmentManager,"date_dialog")
+        }
+        TimerText.setOnClickListener{
+            val dialog = TimePickerFragment()
+            dialog.show(supportFragmentManager,"time_dialog")
+        }
+        
 
     }
 
@@ -46,6 +106,23 @@ class EntryActivity : AppCompatActivity() {
             else -> {
                 am.set(AlarmManager.RTC_WAKEUP,calendar.timeInMillis,pending)
             }
+        }
+    }
+
+    private fun cancelAlarmManager(){
+        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this,AlarmBroadcastReceiver::class.java)
+        val pending = PendingIntent.getBroadcast(this,0,intent,0)
+        am.cancel(pending)
+    }
+
+    private fun String.toDate(pattern: String = "yyyy/MM/dd HH:mm"):Date? {
+        return try {
+            SimpleDateFormat(pattern).parse(this)
+        }catch(e:IllegalArgumentException){
+            return null
+        }catch(e: ParseException){
+            return null
         }
     }
 }
