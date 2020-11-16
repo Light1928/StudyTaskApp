@@ -10,12 +10,16 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.math.E
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var realm: Realm
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -25,12 +29,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         TestButton.setOnClickListener { onTestButtonTapped(it) }
+
+        realm = Realm.getDefaultInstance()
+
     }
 
     fun onTestButtonTapped(view: View?) {
         val intent = Intent(this, EntryActivity::class.java)
         startActivity(intent)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        realm.close()
+    }
+
 
 
 }
