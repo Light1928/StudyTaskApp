@@ -72,7 +72,7 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
                 }
                 else -> {
                     Toast.makeText(
-                        this,"日付の形式が正しくありません",
+                        this,"全て入力してください",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
