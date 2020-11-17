@@ -8,6 +8,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_entry.*
 import java.lang.IllegalArgumentException
@@ -44,6 +46,10 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
+
         if(intent?.getBooleanExtra("onReceive",false) == true) {
             val dialog = TimeAlertDialog()
             dialog.show(supportFragmentManager,"alert_dialog")
@@ -84,7 +90,14 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
             val dialog = TimePickerFragment()
             dialog.show(supportFragmentManager,"time_dialog")
         }
-        
+
+
+
+
+
+
+
+
 
     }
 
@@ -125,4 +138,5 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
             return null
         }
     }
+
 }
