@@ -11,5 +11,4 @@ open class Task : RealmObject() {
     var title: String = ""
     var date: Date = Date()
     var time: String = ""
-
 }

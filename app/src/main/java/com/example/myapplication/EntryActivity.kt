@@ -60,11 +60,11 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
             realm.executeTransaction{db: Realm ->
                 val maxId = db.where<Task>().max("id")
                 val nextId = (maxId?.toLong() ?: 0L) + 1
-                val Task =db.createObject<Task>(nextId)
+                val task =db.createObject<Task>(nextId)
                 val date = DateText.text.toString().toDate("yyyy/MM/dd")
-                if(date != null) Task.date = date
-                Task.title = TitleText.text.toString()
-                Task.time = TimerText.text.toString()
+                if(date != null) task.date = date
+                task.title = TitleText.text.toString()
+                task.time = TimerText.text.toString()
 
             }
         }

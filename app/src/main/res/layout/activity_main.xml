@@ -27,9 +27,12 @@
             android:text="Button"
             tools:layout_editor_absoluteX="137dp"
             tools:layout_editor_absoluteY="530dp" />
+
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
-            android:layout_width="395dp" android:layout_height="719dp" tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="12dp"/>
+            android:layout_width="255dp"
+            android:layout_height="99dp"
+            tools:layout_editor_absoluteX="148dp"
+            tools:layout_editor_absoluteY="632dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
