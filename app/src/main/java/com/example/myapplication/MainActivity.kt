@@ -10,7 +10,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.realm.Realm
+import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -31,7 +33,10 @@ class MainActivity : AppCompatActivity() {
         TestButton.setOnClickListener { onTestButtonTapped(it) }
 
         realm = Realm.getDefaultInstance()
-
+        list.layoutManager = LinearLayoutManager(this)
+        val Task = realm.where<Task>().findAll()
+        val adapter = TaskAdapter(Task)
+        list.adapter = adapter
     }
 
     fun onTestButtonTapped(view: View?) {

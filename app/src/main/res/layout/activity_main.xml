@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hello World!"
@@ -17,8 +18,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.213" />
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.213"/>
 
     <Button
             android:id="@+id/TestButton"
@@ -27,5 +27,9 @@
             android:text="Button"
             tools:layout_editor_absoluteX="137dp"
             tools:layout_editor_absoluteY="530dp" />
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="395dp" android:layout_height="719dp" tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="12dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
