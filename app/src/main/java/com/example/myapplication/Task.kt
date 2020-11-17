@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.sql.Time
 import java.util.*
 
 open class Task : RealmObject() {
@@ -9,6 +10,6 @@ open class Task : RealmObject() {
     var id : Long = 0
     var title: String = ""
     var date: Date = Date()
-    var datail: String = ""
+    var time: String = ""
 
 }

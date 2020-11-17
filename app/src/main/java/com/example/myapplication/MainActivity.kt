@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         realm = Realm.getDefaultInstance()
         list.layoutManager = LinearLayoutManager(this)
-        val Task = realm.where<Task>().findAll()
-        val adapter = TaskAdapter(Task)
+        val task = realm.where<Task>().findAll()
+        val adapter = TaskAdapter(task)
         list.adapter = adapter
     }
 

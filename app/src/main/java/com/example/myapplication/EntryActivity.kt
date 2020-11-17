@@ -8,9 +8,13 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import io.realm.Realm
+import io.realm.kotlin.createObject
+import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_entry.*
 import java.lang.IllegalArgumentException
 import java.text.ParseException
@@ -20,6 +24,10 @@ import java.util.*
 class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
     ,DatePickerFragment.OnDateSelectedListener
     ,TimePickerFragment.OnTimeSelectedListener{
+
+
+    //realm用の変数
+    private lateinit var realm: Realm
 
     override fun onSelected(year: Int, month: Int, date: Int){
         val c = Calendar.getInstance()
@@ -46,6 +54,21 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        realm = Realm.getDefaultInstance()
+
+        EntryButton.setOnClickListener{view: View ->
+            realm.executeTransaction{db: Realm ->
+                val maxId = db.where<Task>().max("id")
+                val nextId = (maxId?.toLong() ?: 0L) + 1
+                val Task =db.createObject<Task>(nextId)
+                val date = DateText.text.toString().toDate("yyyy/MM/dd")
+                if(date != null) Task.date = date
+                Task.title = TitleText.text.toString()
+                Task.time = TimerText.text.toString()
+
+            }
+        }
+
 
 
 
@@ -93,13 +116,29 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
 
 
 
-
-
-
-
-
-
     }
+
+
+
+
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        realm.close()
+    }
+
+
+
+//    private fun String.toDate(pattern: String = "yyyy/MM/dd HH:mm"): Date? {
+//        return try{
+//            SimpleDateFormat(pattern).parse(this)
+//        }catch(e: IllegalArgumentException){
+//            return null
+//        }catch(e: ParseException){
+//            return null
+//        }
+//    }
 
 
     private fun setAlarmManager(calendar: Calendar) {
