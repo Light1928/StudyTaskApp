@@ -32,19 +32,19 @@ class MainActivity : AppCompatActivity() {
 
         ////////////////
         // LayoutManagerの設定
-        val layoutManager = LinearLayoutManager(this)
-        list.layoutManager = layoutManager
-
-        // Adapterの設定
-        val sampleList = mutableListOf<String>()
-        for (i in 0..10) {
-            sampleList.add(i.toString())
-        }
-        val adapter = RecyclerViewAdapter(sampleList)
-        list.adapter = adapter
-
-        // 区切り線の表示
-        list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+//        val layoutManager = LinearLayoutManager(this)
+//        list.layoutManager = layoutManager
+//
+//        // Adapterの設定
+//        val sampleList = mutableListOf<String>()
+//        for (i in 0..10) {
+//            sampleList.add(i.toString())
+//        }
+////        val adapter = RecyclerViewAdapter(sampleList)
+////        list.adapter = adapter
+//
+//        // 区切り線の表示
+//        list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         ////////////////
 
 
