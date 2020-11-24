@@ -56,18 +56,18 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
         super.onCreate(savedInstanceState)
         realm = Realm.getDefaultInstance()
 
-        EntryButton.setOnClickListener{view: View ->
-            realm.executeTransaction{db: Realm ->
-                val maxId = db.where<Task>().max("id")
-                val nextId = (maxId?.toLong() ?: 0L) + 1
-                val task =db.createObject<Task>(nextId)
-                val date = DateText.text.toString().toDate("yyyy/MM/dd")
-                if(date != null) task.date = date
-                task.title = TitleText.text.toString()
-                task.time = TimerText.text.toString()
-
-            }
-        }
+//        EntryButton.setOnClickListener{view: View ->
+//            realm.executeTransaction{db: Realm ->
+//                val maxId = db.where<Task>().max("id")
+//                val nextId = (maxId?.toLong() ?: 0L) + 1
+//                val task =db.createObject<Task>(nextId)
+//                val date = DateText.text.toString().toDate("yyyy/MM/dd")
+//                if(date != null) task.date = date
+//                task.title = TitleText.text.toString()
+//                task.time = TimerText.text.toString()
+//
+//            }
+//        }
 
 
 
@@ -81,7 +81,24 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
         setContentView(R.layout.activity_entry)
 
 
-        EntryButton.setOnClickListener {
+        EntryButton.setOnClickListener {view: View ->
+            realm.executeTransaction{db: Realm ->
+                val maxId = db.where<Task>().max("id")
+                val nextId = (maxId?.toLong() ?: 0L) + 1
+                val task =db.createObject<Task>(nextId)
+                val date = DateText.text.toString().toDate("yyyy/MM/dd")
+                if(date != null) task.date = date
+                task.title = TitleText.text.toString()
+                task.time = TimerText.text.toString()
+
+            }
+
+
+
+
+
+
+
             val date = "${DateText.text} ${TimerText.text}".toDate()
             when {
                 date != null -> {
