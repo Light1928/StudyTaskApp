@@ -74,7 +74,6 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
 
 
 
-
         if(intent?.getBooleanExtra("onReceive",false) == true) {
             val dialog = TimeAlertDialog()
             dialog.show(supportFragmentManager,"alert_dialog")
@@ -92,6 +91,9 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
                 if(date != null) task.date = date
                 task.title = TitleText.text.toString()
                 task.time = TimerText.text.toString()
+
+
+                //次回、時刻も表示できるようにする
 
             }
 //            val snackbar = Snackbar.make(view,"追加しました",Snackbar.LENGTH_SHORT)
@@ -144,24 +146,11 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
 
 
 
-
-
     override fun onDestroy() {
         super.onDestroy()
         realm.close()
     }
 
-
-
-//    private fun String.toDate(pattern: String = "yyyy/MM/dd HH:mm"): Date? {
-//        return try{
-//            SimpleDateFormat(pattern).parse(this)
-//        }catch(e: IllegalArgumentException){
-//            return null
-//        }catch(e: ParseException){
-//            return null
-//        }
-//    }
 
 
     private fun setAlarmManager(calendar: Calendar) {
