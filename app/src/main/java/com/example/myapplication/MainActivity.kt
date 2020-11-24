@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -26,6 +27,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
+
+
+
+        ////////////////
+        // LayoutManagerの設定
+        val layoutManager = LinearLayoutManager(this)
+        list.layoutManager = layoutManager
+
+        // Adapterの設定
+        val sampleList = mutableListOf<String>()
+        for (i in 0..10) {
+            sampleList.add(i.toString())
+        }
+        val adapter = RecyclerViewAdapter(sampleList)
+        list.adapter = adapter
+
+        // 区切り線の表示
+        list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        ////////////////
+
 
 
         setContentView(R.layout.activity_main)
