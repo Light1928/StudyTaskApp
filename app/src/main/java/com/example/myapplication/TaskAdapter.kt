@@ -47,3 +47,7 @@ RealmRecyclerViewAdapter<Task,TaskAdapter.ViewHolder>(data,true){
 
 
 }
+
+
+
+

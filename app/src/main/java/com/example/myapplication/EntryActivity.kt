@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import io.realm.Realm
 import io.realm.kotlin.createObject
 import io.realm.kotlin.where
@@ -92,9 +94,10 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
                 task.time = TimerText.text.toString()
 
             }
-
-
-
+//            val snackbar = Snackbar.make(view,"追加しました",Snackbar.LENGTH_SHORT)
+//                .setAction("戻る"){finish()}
+//                .setActionTextColor(Color.YELLOW)
+//                .show()
 
 
 
@@ -118,8 +121,11 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
                 }
             }
         }
+
+
         CancelButton.setOnClickListener {
-            cancelAlarmManager()
+//            cancelAlarmManager()
+            finish()
         }
 
         DateText.setOnClickListener{
