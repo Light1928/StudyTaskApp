@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.realm.Realm
 import io.realm.RealmObject.deleteFromRealm
+import io.realm.RealmQuery
 import io.realm.RealmResults
 import io.realm.Sort
 import io.realm.kotlin.where
@@ -74,6 +75,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
+    fun update(id: String, content: Int) {
+        realm.executeTransaction {
+            val task = realm.where(Task::class.java).equalTo("id", id).findAll()
+                ?: return@executeTransaction
+
+        }
+    }
+
+    fun update(task: Task, content: Int) {
+        realm.executeTransaction {
+            task.id = content
+        }
+    }
+
+
     fun readAll(): RealmResults<Task> {
         return realm.where(Task::class.java).findAll()
     }
@@ -107,6 +125,8 @@ class MainActivity : AppCompatActivity() {
                         ?: return@executeTransaction
                     task.deleteFromRealm()
                 }
+
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 Toast.makeText(applicationContext, "を削除しました", Toast.LENGTH_SHORT).show()
 
             }
