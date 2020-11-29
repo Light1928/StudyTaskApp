@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
-
+//スワイプ時に背景が残るのは、データベースの削除ができていないため
                 //連番とリストの配置が同じなら削除できるようにした
               realm.executeTransaction {
                     val task = realm.where(Task::class.java).equalTo("id",viewHolder.adapterPosition).findFirst()
