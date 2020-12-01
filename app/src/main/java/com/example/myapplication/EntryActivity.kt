@@ -93,6 +93,7 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
                 task.time = TimerText.text.toString()
 
 
+
                 //次回、時刻も表示できるようにする
 
             }
@@ -122,6 +123,7 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
                     ).show()
                 }
             }
+
         }
 
 
