@@ -92,18 +92,14 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
                 task.title = TitleText.text.toString()
                 task.time = TimerText.text.toString()
 
-
-
                 //次回、時刻も表示できるようにする
 
             }
+
 //            val snackbar = Snackbar.make(view,"追加しました",Snackbar.LENGTH_SHORT)
 //                .setAction("戻る"){finish()}
 //                .setActionTextColor(Color.YELLOW)
 //                .show()
-
-
-
 
             val date = "${DateText.text} ${TimerText.text}".toDate()
             when {
@@ -123,7 +119,6 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
                     ).show()
                 }
             }
-
         }
 
 
