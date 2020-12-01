@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+    open var id = ""
     private lateinit var adapter: TaskAdapter
     private val realm: Realm by lazy {
         Realm.getDefaultInstance()
@@ -47,7 +48,13 @@ class MainActivity : AppCompatActivity() {
         //  list.layoutManager = LinearLayoutManager(this)
         //表示処理？
         //val task = realm.where<Task>().findAll()
-        adapter = TaskAdapter(this, taskList, true)
+        adapter = TaskAdapter(this, taskList, object : TaskAdapter.OnItemSwipeListener{
+            override fun onItemSwipe(item: Task) {
+                delete(item.id)
+             //   adapter.notifyItemRemoved(TaskAdapter.ViewHolder.a)
+                Toast.makeText(applicationContext, "を削除しました", Toast.LENGTH_SHORT).show()
+            }
+        },true)
 
 
         list.setHasFixedSize(true)
@@ -85,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun update(task: Task, content: Int) {
+    fun update(task: Task, content: String) {
         realm.executeTransaction {
             task.id = content
         }
@@ -120,11 +127,23 @@ class MainActivity : AppCompatActivity() {
 
 //スワイプ時に背景が残るのは、データベースの削除ができていないため
                 //連番とリストの配置が同じなら削除できるようにした
+
+                object : TaskAdapter.test {
+                    override fun getId(item: Task) {
+                        id = item.id
+
+                    }
+                }
+                
               realm.executeTransaction {
-                    val task = realm.where(Task::class.java).equalTo("id",viewHolder.adapterPosition).findFirst()
+
+
+
+                    val task = realm.where(Task::class.java).equalTo("id",id).findFirst()
                         ?: return@executeTransaction
                     task.deleteFromRealm()
                 }
+                val tasks = list.adapter
 
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 Toast.makeText(applicationContext, "を削除しました", Toast.LENGTH_SHORT).show()

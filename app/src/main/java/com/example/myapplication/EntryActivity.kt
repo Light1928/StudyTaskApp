@@ -84,9 +84,10 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
 
         EntryButton.setOnClickListener {view: View ->
             realm.executeTransaction{db: Realm ->
-                val maxId = db.where<Task>().max("id")
-                val nextId = (maxId?.toLong() ?: 0L) + 1
-                val task =db.createObject<Task>(nextId)
+//                val maxId = db.where<Task>().max("id")
+//////                val nextId = (maxId?.toLong() ?: 0L) + 1
+
+                val task =db.createObject<Task>(UUID.randomUUID().toString())
                 val date = DateText.text.toString().toDate("yyyy/MM/dd")
                 if(date != null) task.date = date
                 task.title = TitleText.text.toString()

@@ -17,14 +17,14 @@ import kotlinx.android.synthetic.main.list_item.view.*
 class TaskAdapter(
    private val context: Context,
     private var taskList: OrderedRealmCollection<Task>?,
-   // private var listener: OnItemClickListener,// ---------追加----------
+   private var listener: OnItemSwipeListener,// ---------追加----------
     private val autoUpdate: Boolean
 ) :
 RealmRecyclerViewAdapter<Task,TaskAdapter.ViewHolder>(taskList,autoUpdate){
-private var listener: ((Int?) -> Unit)? = null
-    fun setOnItemSwipeListener(listener:(Int?) -> Unit){
-        this.listener = listener
-    }
+//private var listener: ((Int?) -> Unit)? = null
+//    fun setOnItemSwipeListener(listener:(Int?) -> Unit){
+//        this.listener = listener
+//    }
     override fun getItemCount(): Int = taskList?.size ?: 0
 
 
@@ -60,9 +60,11 @@ private var listener: ((Int?) -> Unit)? = null
 //
     override fun onBindViewHolder( holder: TaskAdapter.ViewHolder,position: Int){
 
-        val Task: Task? = getItem(position)
-        holder.title.text = Task?.title
-        holder.date.text = DateFormat.format("yyyy/mm/dd", Task?.date)
+        val task: Task? = getItem(position)
+    listener.onItemSwipe(Task())
+    val id = task?.id
+        holder.title.text = task?.title
+        holder.date.text = DateFormat.format("yyyy/mm/dd", task?.date)
     //holder.itemView.set
     }
 
@@ -70,8 +72,11 @@ private var listener: ((Int?) -> Unit)? = null
 //        return getItem(position)?.id ?:0
 //    }
 
-    interface OnItemClickListener {
-        fun onItemClick(item: Task)
+    interface OnItemSwipeListener {
+        fun onItemSwipe(item: Task)
+    }
+    interface test{
+        fun getId(item: Task)
     }
 
 

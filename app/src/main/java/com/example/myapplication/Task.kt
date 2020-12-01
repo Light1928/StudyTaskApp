@@ -6,8 +6,7 @@ import java.sql.Time
 import java.util.*
 //テーブル定義
 open class Task : RealmObject() {
-    @PrimaryKey
-    var id : Int = 0
+    @PrimaryKey open var id : String = UUID.randomUUID().toString()
     var title: String = ""
     var date: Date = Date()
     var time: String = ""
