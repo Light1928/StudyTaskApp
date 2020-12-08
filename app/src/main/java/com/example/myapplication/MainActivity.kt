@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    open var id = ""
+    open var id = "1"
     private lateinit var adapter: TaskAdapter
     private val realm: Realm by lazy {
         Realm.getDefaultInstance()
@@ -49,11 +49,14 @@ class MainActivity : AppCompatActivity() {
         //表示処理？
         //val task = realm.where<Task>().findAll()
         adapter = TaskAdapter(this, taskList, object : TaskAdapter.OnItemSwipeListener{
-            override fun onItemSwipe(item: Task) {
-                delete(item.id)
-             //   adapter.notifyItemRemoved(TaskAdapter.ViewHolder.a)
-                Toast.makeText(applicationContext, "を削除しました", Toast.LENGTH_SHORT).show()
-            }
+//            override fun onItemSwipe(item: Task) {
+//
+//                Log.d("*******",item.id)
+//                delete(item.id)
+//
+//             //   adapter.notifyItemRemoved(TaskAdapter.ViewHolder.a)
+//               // Toast.makeText(applicationContext, "を削除しました", Toast.LENGTH_SHORT).show()
+//            }
         },true)
 
 
@@ -128,21 +131,24 @@ class MainActivity : AppCompatActivity() {
 //スワイプ時に背景が残るのは、データベースの削除ができていないため
                 //連番とリストの配置が同じなら削除できるようにした
 
-                object : TaskAdapter.test {
-                    override fun getId(item: Task) {
-                        id = item.id
+              fun onItemSwipe(item: Task) {
 
-                    }
-                }
-                
-              realm.executeTransaction {
+                  Log.d("*******", item.id)
+                  delete(item.id)
+              }
 
+                adapter.notifyItemRemoved(TaskAdapter.ViewHolder.adapter)
+                Toast.makeText(applicationContext, "を削除しました", Toast.LENGTH_SHORT).show()
+            }
 
-
-                    val task = realm.where(Task::class.java).equalTo("id",id).findFirst()
-                        ?: return@executeTransaction
-                    task.deleteFromRealm()
-                }
+//              realm.executeTransaction {
+//
+//
+//
+//                    val task = realm.where(Task::class.java).equalTo("id",id).findFirst()
+//                        ?: return@executeTransaction
+//                    task.deleteFromRealm()
+//                }
                 val tasks = list.adapter
 
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
