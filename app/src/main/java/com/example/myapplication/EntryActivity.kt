@@ -84,26 +84,23 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
 
         EntryButton.setOnClickListener {view: View ->
             realm.executeTransaction{db: Realm ->
-                val maxId = db.where<Task>().max("id")
-                val nextId = (maxId?.toLong() ?: 0L) + 1
-                val task =db.createObject<Task>(nextId)
+//                val maxId = db.where<Task>().max("id")
+//////                val nextId = (maxId?.toLong() ?: 0L) + 1
+
+                val task =db.createObject<Task>(UUID.randomUUID().toString())
                 val date = DateText.text.toString().toDate("yyyy/MM/dd")
                 if(date != null) task.date = date
                 task.title = TitleText.text.toString()
                 task.time = TimerText.text.toString()
 
-
-
                 //次回、時刻も表示できるようにする
 
             }
+
 //            val snackbar = Snackbar.make(view,"追加しました",Snackbar.LENGTH_SHORT)
 //                .setAction("戻る"){finish()}
 //                .setActionTextColor(Color.YELLOW)
 //                .show()
-
-
-
 
             val date = "${DateText.text} ${TimerText.text}".toDate()
             when {
@@ -123,7 +120,6 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
                     ).show()
                 }
             }
-
         }
 
 
