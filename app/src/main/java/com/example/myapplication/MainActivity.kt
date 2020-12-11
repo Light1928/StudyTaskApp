@@ -27,11 +27,12 @@ import kotlinx.android.synthetic.main.list_item.view.*
 
 
 class MainActivity : AppCompatActivity() {
-  //  open var id = "1"
+
     private lateinit var adapter: TaskAdapter
     private val realm: Realm by lazy {
         Realm.getDefaultInstance()
     }
+    //スワイプ機能実装に必要
     private val swipeToDismissTouchHelper by lazy {
         getSwipeToDismissTouchHelper(adapter)
     }
@@ -41,13 +42,12 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
-//スワイプ
 
         setContentView(R.layout.activity_main)
         val taskList = readAll()
-        TestButton.setOnClickListener { onTestButtonTapped(it) }
+        fab.setOnClickListener { onTestButtonTapped(it) }
 
-        adapter = TaskAdapter(this, taskList,true)
+        adapter = TaskAdapter(this, taskList, true)
 
 
 
@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         swipeToDismissTouchHelper.attachToRecyclerView(list)
 
     }
+
     override fun onDestroy() {
         super.onDestroy()
         realm.close()
@@ -75,7 +76,6 @@ class MainActivity : AppCompatActivity() {
             task.deleteFromRealm()
         }
     }
-
 
 
     fun update(id: String, content: Int) {
@@ -116,20 +116,19 @@ class MainActivity : AppCompatActivity() {
             ): Boolean {
                 return false
             }
-
+            //スワイプ時の処理
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//val id = Recycler
-//println("***************")\
 
-                 val view = viewHolder.itemView
-                val test = view.idTextView.text.toString()
-                println("***************************"+test)
+                val view = viewHolder.itemView
+                val id = view.idTextView.text.toString()
+                // val title = view.contentTextView.text.toString()
+                println("***************************" + id)
 
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                delete(test)
-             //   adapter.notifyDataSetChanged()
+                delete(id)
+                //   adapter.notifyDataSetChanged()
                 list.adapter = adapter
-                Toast.makeText(applicationContext, "を削除しました", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "削除しました", Toast.LENGTH_SHORT).show()
 
             }
 
@@ -155,7 +154,7 @@ class MainActivity : AppCompatActivity() {
                 val background = ColorDrawable(Color.RED)
 
 
-                //アイコンよう
+                //アイコン用
                 val deleteIcon = AppCompatResources.getDrawable(
                     this@MainActivity,
                     R.drawable.ic_baseline_delete_24
