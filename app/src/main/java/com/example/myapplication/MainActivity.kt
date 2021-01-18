@@ -13,6 +13,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.tab.TabPagerAdapter
 import io.realm.Realm
 import io.realm.RealmObject.deleteFromRealm
 import io.realm.RealmObject.getRealm
@@ -47,6 +48,9 @@ class MainActivity : AppCompatActivity() {
         val taskList = readAll()
         fab.setOnClickListener { onTestButtonTapped(it) }
 
+
+
+
         adapter = TaskAdapter(this, taskList, true)
 
 
@@ -55,6 +59,12 @@ class MainActivity : AppCompatActivity() {
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = adapter
         swipeToDismissTouchHelper.attachToRecyclerView(list)
+
+
+        //Adapterの生成
+        pager.adapter = TabPagerAdapter(supportFragmentManager, this@MainActivity)
+        tab_layout.setupWithViewPager(pager)
+
 
     }
 
