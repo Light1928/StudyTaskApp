@@ -23,6 +23,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
     , DatePickerFragment.OnDateSelectedListener
     , TimePickerFragment.OnTimeSelectedListener {
@@ -71,11 +72,13 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
 
                 val task = db.createObject<Task>(UUID.randomUUID().toString())
                 val date = DateText.text.toString().toDate("yyyy/MM/dd")
+//                val date = DateText.text.toString()
                 if (date != null) task.date = date
                 task.title = TitleText.text.toString()
                 task.time = TimerText.text.toString()
+                task.flag = false
 
-
+println("+++++++++++++日付エントリー"+task.date)
             }
 //トーストよりスナックバーが主流？
 //            val snackbar = Snackbar.make(view,"追加しました",Snackbar.LENGTH_SHORT)
@@ -156,7 +159,7 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
         am.cancel(pending)
     }
 
-    private fun String.toDate(pattern: String = "yyyy/MM/dd HH:mm"): Date? {
+    private fun String.toDate(pattern: String = "yyyy/MM/dd"): Date? {
         return try {
             SimpleDateFormat(pattern).parse(this)
         } catch (e: IllegalArgumentException) {

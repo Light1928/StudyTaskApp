@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.size
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,9 +45,8 @@ class MainActivity : AppCompatActivity() {
 
 
         setContentView(R.layout.activity_main)
-        val taskList = readAll()
+       val taskList = readAll()
         fab.setOnClickListener { onTestButtonTapped(it) }
-
         adapter = TaskAdapter(this, taskList, true)
 
 
@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = adapter
         swipeToDismissTouchHelper.attachToRecyclerView(list)
+
 
     }
 
@@ -71,11 +72,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun delete(task: Task) {
-        realm.executeTransaction {
-            task.deleteFromRealm()
-        }
-    }
+//    fun delete(task: Task) {
+//        realm.executeTransaction {
+//            task.deleteFromRealm()
+//        }
+//    }
 
 
     fun update(id: String, content: Int) {
@@ -121,14 +122,22 @@ class MainActivity : AppCompatActivity() {
 
                 val view = viewHolder.itemView
                 val id = view.idTextView.text.toString()
+                delete(id)
+              list.adapter?.notifyItemRemoved(viewHolder.layoutPosition)
+
                 // val title = view.contentTextView.text.toString()
                 println("***************************" + id)
+println("***********aaaaaa"+(viewHolder.layoutPosition))
 
-                adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                delete(id)
+                //adapterpositionは0始まり
+//                list.adapter?.notifyItemRemoved(viewHolder.adapterPosition)
+
                 //   adapter.notifyDataSetChanged()
-                list.adapter = adapter
+
+                //list.adapter = adapter.notifyDataSetChanged()
+
                 Toast.makeText(applicationContext, "削除しました", Toast.LENGTH_SHORT).show()
+
 
             }
 
@@ -178,6 +187,7 @@ class MainActivity : AppCompatActivity() {
                 deleteIcon.draw(c)
             }
         })
+
 }
 
 

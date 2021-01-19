@@ -23,10 +23,7 @@ class TaskAdapter(
     private val autoUpdate: Boolean
 ) :
 RealmRecyclerViewAdapter<Task,TaskAdapter.ViewHolder>(taskList,autoUpdate){
-//private var listener: ((Int?) -> Unit)? = null
-//    fun setOnItemSwipeListener(listener:(Int?) -> Unit){
-//        this.listener = listener
-//    }
+
     override fun getItemCount(): Int = taskList?.size ?: 0
 
 
@@ -54,20 +51,13 @@ RealmRecyclerViewAdapter<Task,TaskAdapter.ViewHolder>(taskList,autoUpdate){
 
     }
 
-    class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val container : LinearLayout = view.container  // ---------追加----------
-        //val imageView: ImageView = view.imageView
-        val contentTextView: TextView = view.contentTextView
-        val dateTextView: TextView = view.dateTextView
-        val id: TextView = view.idTextView
-    }
-//
+
     override fun onBindViewHolder( holder: TaskAdapter.ViewHolder,position: Int){
 
         val task: Task? = taskList?.get(position)
     //デバッグ用
 println(task)
-    println(position)
+    println("******************************AAAAAAAAAAA***"+position)
     val id = task?.id
     //println("*****"+id)
 
@@ -75,10 +65,6 @@ println(task)
         holder.date.text = DateFormat.format("yyyy/mm/dd", task?.date)
     holder.id.text = task?.id
 
-//    fun getId(position: Int):Int{
-//        println("*********ABC"+position)
-//        return position
-//    }
     //holder.itemView.set
 
 
