@@ -25,13 +25,14 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
             .putExtra("onReceive",true)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(mainIntent)
+
+
         val format1 = SimpleDateFormat("yyyy/MM/dd")
         val format2 = SimpleDateFormat("HH:mm")
         val date = Date()
 
         val time = Date()
 
-//
         realm.executeTransaction {
             var data = realm.where(Task::class.java).equalTo("date", format1.format(date).toDate("yyyy/MM/dd")
             ).and()
@@ -40,9 +41,10 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
             data!!.flag = true
 println("++++++++++++++++++++++++++++++++++++++++++++日付"+format1.format(date))
         }
+
+        Toast.makeText(context,"アラームを受信しました",Toast.LENGTH_SHORT).show()
 //        println("時間**************************"+format1.format(date)+format2.format(time))
-        Toast.makeText(context,"アラームを受信しました",Toast.LENGTH_SHORT)
-            .show()
+
 //
 //
 //                    val snackbar = Snackbar.make(context,"追加しました", Snackbar.LENGTH_SHORT)
