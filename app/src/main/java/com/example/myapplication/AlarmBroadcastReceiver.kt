@@ -27,22 +27,22 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
         context.startActivity(mainIntent)
 
 
-        val format1 = SimpleDateFormat("yyyy/MM/dd")
-        val format2 = SimpleDateFormat("HH:mm")
-        val date = Date()
+//        val format1 = SimpleDateFormat("yyyy/MM/dd")
+//        val format2 = SimpleDateFormat("HH:mm")
+//        val date = Date()
+//
+//        val time = Date()
+//
+//        realm.executeTransaction {
+//            var data = realm.where(Task::class.java).equalTo("date", format1.format(date).toDate("yyyy/MM/dd")
+//            ).and()
+//                .equalTo("time",format2.format(time)).findFirst()
+//            println("***********testdesu"+data)
+//            data!!.flag = true
+//println("++++++++++++++++++++++++++++++++++++++++++++日付"+format1.format(date))
+//        }
 
-        val time = Date()
-
-        realm.executeTransaction {
-            var data = realm.where(Task::class.java).equalTo("date", format1.format(date).toDate("yyyy/MM/dd")
-            ).and()
-                .equalTo("time",format2.format(time)).findFirst()
-            println("***********testdesu"+data)
-            data!!.flag = true
-println("++++++++++++++++++++++++++++++++++++++++++++日付"+format1.format(date))
-        }
-
-        Toast.makeText(context,"アラームを受信しました",Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context,"アラームを受信しました",Toast.LENGTH_SHORT).show()
 //        println("時間**************************"+format1.format(date)+format2.format(time))
 
 //
@@ -57,14 +57,14 @@ println("++++++++++++++++++++++++++++++++++++++++++++日付"+format1.format(date
     fun update(id: String, content: Int) {
         realm.executeTransaction {
             var data = realm.where(Task::class.java).equalTo("time", id).findFirst()
-               data!!.flag = true
+            data!!.flag = true
 
         }
     }
 
 
 
-     public fun String.toDate(pattern: String = "yyyy/MM/dd"): Date? {
+    public fun String.toDate(pattern: String = "yyyy/MM/dd"): Date? {
         return try {
             SimpleDateFormat(pattern).parse(this)
         } catch (e: IllegalArgumentException) {
