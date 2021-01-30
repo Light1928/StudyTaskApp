@@ -92,22 +92,27 @@ println("+++++++++++++日付エントリー"+task.date)
 //                .setActionTextColor(Color.YELLOW)
 //                .show()
 
-            val date = "${DateText.text} ${TimerText.text}".toDate()
-            println("*****************entryactivity"+TimerText.text)
-            println("***"+date)
+
+            val date2 = "${DateText.text} ${TimerText.text}"
+            //toDateでStringを日付型で変換
+            val date = date2.toDate()
+            println("*****************entryactivity"+date2)
+            println("***************************formatで変換101行"+date)
             when {
                 date != null -> {
                     val calendar = Calendar.getInstance()
-                    val format1 = SimpleDateFormat("yyyy/MM/dd'T'HH:mm:ss")
 
-                    val hiduke = format1.format(date)
-//                    val temp = hiduke.toLong()
-                    val temp = getMilliFromDate(hiduke)+20
-                    println("*****************************************hiduke"+hiduke)
-                    println("***************************"+temp)
-                    println("*******************************timeeeee4"+System.currentTimeMillis())
 
                     //calendar.add(Calendar.SECOND,5)
+                    val format2 = SimpleDateFormat("yyyy/MM/dd HH:mm")
+                    val format3 = SimpleDateFormat("HH:mm")
+                    val date3 = format2.format(date)
+                    val date5 = format3.format(date)
+                    val date4 = getMilliFromDate(date3)
+                    println("*******************************timeeeeeaaaa"+System.currentTimeMillis())
+                    println("********************************dateaaaaa"+date4.toInt())
+                 //次回はここから解決する
+                    //   calendar.set(Calendar.MILLISECOND,date4)
                     setAlarmManager(calendar)
                     Toast.makeText(
                         this, "タスクをセットしました",
@@ -176,20 +181,37 @@ println("+++++++++++++日付エントリー"+task.date)
         am.cancel(pending)
     }
 
-    private fun String.toDate(pattern: String = "yyyy/MM/dd"): Date? {
-        return try {
-            SimpleDateFormat(pattern).parse(this)
+//    fun String.toDate(pattern: String = "yyyy/MM/dd HH:mm:ss"): Date? {
+//        return try {
+//            SimpleDateFormat(pattern).parse(this)
+//        } catch (e: IllegalArgumentException) {
+//            return null
+//        } catch (e: ParseException) {
+//            return null
+//        }
+//    }
+
+
+    fun String.toDate(pattern: String = "yyyy/MM/dd HH:mm"): Date? {
+        val sdFormat = try {
+            SimpleDateFormat(pattern)
         } catch (e: IllegalArgumentException) {
-            return null
-        } catch (e: ParseException) {
-            return null
+            null
         }
+        val date = sdFormat?.let {
+            try {
+                it.parse(this)
+            } catch (e: ParseException){
+                null
+            }
+        }
+        return date
     }
 
 
     fun getMilliFromDate(dateFormat: String): Long {
         var date = Date()
-        val formatter = SimpleDateFormat("yyyy/MM/dd'T'HH:mm")
+        val formatter = SimpleDateFormat("yyyy/MM/dd HH:mm")
         try {
             date = formatter.parse(dateFormat)
         } catch (e: ParseException) {
