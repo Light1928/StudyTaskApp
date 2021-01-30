@@ -24,6 +24,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
+
+
+
 class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
     , DatePickerFragment.OnDateSelectedListener
     , TimePickerFragment.OnTimeSelectedListener {
@@ -67,6 +70,8 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
         setContentView(R.layout.activity_entry)
 
 
+
+
         EntryButton.setOnClickListener { view: View ->
             realm.executeTransaction { db: Realm ->
 
@@ -80,6 +85,7 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
 
 println("+++++++++++++日付エントリー"+task.date)
             }
+
 //トーストよりスナックバーが主流？
 //            val snackbar = Snackbar.make(view,"追加しました",Snackbar.LENGTH_SHORT)
 //                .setAction("戻る"){finish()}
@@ -87,10 +93,21 @@ println("+++++++++++++日付エントリー"+task.date)
 //                .show()
 
             val date = "${DateText.text} ${TimerText.text}".toDate()
+            println("*****************entryactivity"+TimerText.text)
+            println("***"+date)
             when {
                 date != null -> {
                     val calendar = Calendar.getInstance()
-                    calendar.time = date
+                    val format1 = SimpleDateFormat("yyyy/MM/dd'T'HH:mm:ss")
+
+                    val hiduke = format1.format(date)
+//                    val temp = hiduke.toLong()
+                    val temp = getMilliFromDate(hiduke)+20
+                    println("*****************************************hiduke"+hiduke)
+                    println("***************************"+temp)
+                    println("*******************************timeeeee4"+System.currentTimeMillis())
+
+                    //calendar.add(Calendar.SECOND,5)
                     setAlarmManager(calendar)
                     Toast.makeText(
                         this, "タスクをセットしました",
@@ -167,6 +184,20 @@ println("+++++++++++++日付エントリー"+task.date)
         } catch (e: ParseException) {
             return null
         }
+    }
+
+
+    fun getMilliFromDate(dateFormat: String): Long {
+        var date = Date()
+        val formatter = SimpleDateFormat("yyyy/MM/dd'T'HH:mm")
+        try {
+            date = formatter.parse(dateFormat)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        println("Today is $date")
+        return date.time
     }
 
 }
