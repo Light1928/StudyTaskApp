@@ -17,4 +17,19 @@
     </style>
 
 
+    <style name="AccentButtonStyle" parent="Theme.AppCompat">
+        <!--ボタンの色-->
+        <item name="colorButtonNormal">#00bfff</item>
+        <!--ボタンをプレスしている時、シークバーをプレスしている時の色-->
+        <item name="colorControlHighlight">#00ffff</item>
+    </style>
+
+    <style name="CancelButtonStyle" parent="Theme.AppCompat.Light">
+        <!--ボタンの色-->
+        <item name="colorButtonNormal">#FAFAFA</item>
+        <!--ボタンをプレスしている時、シークバーをプレスしている時の色-->
+        <item name="colorControlHighlight">#a9a9a9</item>
+    </style>
+
+
 </resources>
