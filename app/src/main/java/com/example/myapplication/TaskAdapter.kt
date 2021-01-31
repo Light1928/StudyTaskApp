@@ -62,10 +62,8 @@ println(task)
     //println("*****"+id)
 
         holder.title.text = task?.title
-        holder.date.text = DateFormat.format("yyyy/mm/dd", task?.date)
-    holder.id.text = task?.id
-
-    //holder.itemView.set
+        holder.date.text = DateFormat.format("yyyy/MM/dd HH:mm", task?.date)
+        holder.id.text = task?.id
 
 
     }

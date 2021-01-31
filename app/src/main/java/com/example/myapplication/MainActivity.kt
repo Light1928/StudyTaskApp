@@ -136,7 +136,7 @@ println("***********aaaaaa"+(viewHolder.layoutPosition))
 
                 //   adapter.notifyDataSetChanged()
 
-                //list.adapter = adapter.notifyDataSetChanged()
+                list.adapter = adapter
 
                 Toast.makeText(applicationContext, "削除しました", Toast.LENGTH_SHORT).show()
 

@@ -110,14 +110,15 @@ println("+++++++++++++日付エントリー"+task.date)
                     val date5 = format3.format(date)
                     val date4 = getMilliFromDate(date3)
                     println("*******************************timeeeeeaaaa"+System.currentTimeMillis())
-                    println("********************************dateaaaaa"+date4.toInt())
+                    println("********************************dateaaaaa"+date4)
                  //次回はここから解決する
-                    //   calendar.set(Calendar.MILLISECOND,date4)
+                    calendar.timeInMillis = date4
                     setAlarmManager(calendar)
                     Toast.makeText(
                         this, "タスクをセットしました",
                         Toast.LENGTH_SHORT
                     ).show()
+                    finish()
                 }
                 else -> {
                     Toast.makeText(
@@ -181,15 +182,6 @@ println("+++++++++++++日付エントリー"+task.date)
         am.cancel(pending)
     }
 
-//    fun String.toDate(pattern: String = "yyyy/MM/dd HH:mm:ss"): Date? {
-//        return try {
-//            SimpleDateFormat(pattern).parse(this)
-//        } catch (e: IllegalArgumentException) {
-//            return null
-//        } catch (e: ParseException) {
-//            return null
-//        }
-//    }
 
 
     fun String.toDate(pattern: String = "yyyy/MM/dd HH:mm"): Date? {

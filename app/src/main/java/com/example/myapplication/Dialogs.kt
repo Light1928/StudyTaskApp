@@ -41,28 +41,14 @@ class TimeAlertDialog : DialogFragment(){
 
         val time = Date()
         var realm = Realm.getDefaultInstance()
-//        realm.executeTransaction {
-//            var data = realm.where(Task::class.java).equalTo("date", format1.format(date).toDate("yyyy/MM/dd")
-//            ).and()
-//                .equalTo("time",format2.format(time)).findFirst()
-//            println("***********testdesu"+data)
-//            data!!.flag = true
-//            println("++++++++++++++++++++++++++++++++++++++++++++日付"+format2.format(time))
-//        }
-//    realm.executeTransaction{
-//        var data = realm.where(Task::class.java).equalTo("date", format1.format(date).toDate("yyyy/MM/dd")
-//            ).and()
-//                .equalTo("time",format2.format(time)).findFirst()
-//            ?: return@executeTransaction
-//        data.deleteFromRealm()
-//    }
-            builder.setPositiveButton("起きる"){dialog,which ->
+
+            builder.setPositiveButton("始める"){dialog,which ->
                 listener?.getUp()
 
 
 
             }
-        builder.setNegativeButton("あと５分") {dialog,which ->
+        builder.setNegativeButton("あと５分延長") {dialog,which ->
             listener?.snooze()
         }
 
