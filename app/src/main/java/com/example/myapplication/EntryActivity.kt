@@ -69,15 +69,11 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
 
         setContentView(R.layout.activity_entry)
 
-
-
-
         EntryButton.setOnClickListener { view: View ->
             realm.executeTransaction { db: Realm ->
 
                 val task = db.createObject<Task>(UUID.randomUUID().toString())
                 val date = DateText.text.toString().toDate("yyyy/MM/dd")
-//                val date = DateText.text.toString()
                 if (date != null) task.date = date
                 task.title = TitleText.text.toString()
                 task.time = TimerText.text.toString()
@@ -103,7 +99,6 @@ println("+++++++++++++日付エントリー"+task.date)
                     val calendar = Calendar.getInstance()
 
 
-                    //calendar.add(Calendar.SECOND,5)
                     val format2 = SimpleDateFormat("yyyy/MM/dd HH:mm")
                     val format3 = SimpleDateFormat("HH:mm")
                     val date3 = format2.format(date)

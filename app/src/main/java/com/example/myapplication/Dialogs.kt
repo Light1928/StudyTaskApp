@@ -35,17 +35,9 @@ class TimeAlertDialog : DialogFragment(){
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val builder = AlertDialog.Builder(requireActivity())
             builder.setMessage("時間になりました！")
-        val format1 = SimpleDateFormat("yyyy/MM/dd")
-        val format2 = SimpleDateFormat("HH:mm")
-        val date = Date()
-
-        val time = Date()
-        var realm = Realm.getDefaultInstance()
 
             builder.setPositiveButton("始める"){dialog,which ->
                 listener?.getUp()
-
-
 
             }
         builder.setNegativeButton("あと５分延長") {dialog,which ->
