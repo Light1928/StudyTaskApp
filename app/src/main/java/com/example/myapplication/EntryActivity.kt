@@ -23,6 +23,10 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+
+
+
 class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
     , DatePickerFragment.OnDateSelectedListener
     , TimePickerFragment.OnTimeSelectedListener {
@@ -66,33 +70,55 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
         setContentView(R.layout.activity_entry)
 
 
+
+
         EntryButton.setOnClickListener { view: View ->
             realm.executeTransaction { db: Realm ->
 
                 val task = db.createObject<Task>(UUID.randomUUID().toString())
                 val date = DateText.text.toString().toDate("yyyy/MM/dd")
+//                val date = DateText.text.toString()
                 if (date != null) task.date = date
                 task.title = TitleText.text.toString()
                 task.time = TimerText.text.toString()
+                task.flag = false
 
-
+println("+++++++++++++日付エントリー"+task.date)
             }
+
 //トーストよりスナックバーが主流？
 //            val snackbar = Snackbar.make(view,"追加しました",Snackbar.LENGTH_SHORT)
 //                .setAction("戻る"){finish()}
 //                .setActionTextColor(Color.YELLOW)
 //                .show()
 
-            val date = "${DateText.text} ${TimerText.text}".toDate()
+
+            val date2 = "${DateText.text} ${TimerText.text}"
+            //toDateでStringを日付型で変換
+            val date = date2.toDate()
+            println("*****************entryactivity"+date2)
+            println("***************************formatで変換101行"+date)
             when {
                 date != null -> {
                     val calendar = Calendar.getInstance()
-                    calendar.time = date
+
+
+                    //calendar.add(Calendar.SECOND,5)
+                    val format2 = SimpleDateFormat("yyyy/MM/dd HH:mm")
+                    val format3 = SimpleDateFormat("HH:mm")
+                    val date3 = format2.format(date)
+                    val date5 = format3.format(date)
+                    val date4 = getMilliFromDate(date3)
+                    println("*******************************timeeeeeaaaa"+System.currentTimeMillis())
+                    println("********************************dateaaaaa"+date4)
+                 //次回はここから解決する
+                    calendar.timeInMillis = date4
                     setAlarmManager(calendar)
                     Toast.makeText(
                         this, "タスクをセットしました",
                         Toast.LENGTH_SHORT
                     ).show()
+                    finish()
                 }
                 else -> {
                     Toast.makeText(
@@ -156,14 +182,36 @@ class EntryActivity : AppCompatActivity(), TimeAlertDialog.Listener
         am.cancel(pending)
     }
 
-    private fun String.toDate(pattern: String = "yyyy/MM/dd HH:mm"): Date? {
-        return try {
-            SimpleDateFormat(pattern).parse(this)
+
+
+    fun String.toDate(pattern: String = "yyyy/MM/dd HH:mm"): Date? {
+        val sdFormat = try {
+            SimpleDateFormat(pattern)
         } catch (e: IllegalArgumentException) {
-            return null
-        } catch (e: ParseException) {
-            return null
+            null
         }
+        val date = sdFormat?.let {
+            try {
+                it.parse(this)
+            } catch (e: ParseException){
+                null
+            }
+        }
+        return date
+    }
+
+
+    fun getMilliFromDate(dateFormat: String): Long {
+        var date = Date()
+        val formatter = SimpleDateFormat("yyyy/MM/dd HH:mm")
+        try {
+            date = formatter.parse(dateFormat)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        println("Today is $date")
+        return date.time
     }
 
 }

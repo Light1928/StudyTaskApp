@@ -9,9 +9,14 @@ import android.os.Bundle
 import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
+import io.realm.Realm
+import java.lang.IllegalArgumentException
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 
 class TimeAlertDialog : DialogFragment(){
+
 
     interface  Listener {
         fun getUp()
@@ -30,14 +35,33 @@ class TimeAlertDialog : DialogFragment(){
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val builder = AlertDialog.Builder(requireActivity())
             builder.setMessage("時間になりました！")
-            builder.setPositiveButton("起きる"){dialog,which ->
+        val format1 = SimpleDateFormat("yyyy/MM/dd")
+        val format2 = SimpleDateFormat("HH:mm")
+        val date = Date()
+
+        val time = Date()
+        var realm = Realm.getDefaultInstance()
+
+            builder.setPositiveButton("始める"){dialog,which ->
                 listener?.getUp()
+
+
+
             }
-        builder.setNegativeButton("あと５分") {dialog,which ->
+        builder.setNegativeButton("あと５分延長") {dialog,which ->
             listener?.snooze()
         }
 
             return builder.create()
+    }
+    public fun String.toDate(pattern: String = "yyyy/MM/dd"): Date? {
+        return try {
+            SimpleDateFormat(pattern).parse(this)
+        } catch (e: IllegalArgumentException) {
+            return null
+        } catch (e: ParseException) {
+            return null
+        }
     }
 
 
@@ -71,6 +95,15 @@ class DatePickerFragment : DialogFragment(),
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int){
         listener?.onSelected(year,month,dayOfMonth)
     }
+    public fun String.toDate(pattern: String = "yyyy/MM/dd"): Date? {
+        return try {
+            SimpleDateFormat(pattern).parse(this)
+        } catch (e: IllegalArgumentException) {
+            return null
+        } catch (e: ParseException) {
+            return null
+        }
+    }
 }
 
 
@@ -101,4 +134,5 @@ class TimePickerFragment : DialogFragment(),
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int){
         listener?.onSelected(hourOfDay, minute)
     }
+
 }

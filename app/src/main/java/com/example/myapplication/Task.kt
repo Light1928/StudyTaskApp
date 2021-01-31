@@ -11,6 +11,6 @@ open class Task : RealmObject() {
     var date: Date = Date()
     var time: String = ""
     //履歴画面時に必要
-    //var flag: Boolean = false
+    var flag: Boolean = false
 
 }
